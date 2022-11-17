@@ -40,4 +40,4 @@ cmake-build-release
 
 # ignore deploy directory except debug html
 publish
-!publish/imgui.html
+!publish/debug.html
