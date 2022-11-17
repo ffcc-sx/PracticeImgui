@@ -33,3 +33,11 @@
 
 # Custom: ignore IDE settings.
 .idea
+
+# Custom: ignore compile file of temporary.
+cmake-build-debug
+cmake-build-release
+
+# ignore deploy directory except debug html
+publish
+!publish/imgui.html
