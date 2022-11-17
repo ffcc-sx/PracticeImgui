@@ -4,7 +4,12 @@
 # Content :
 #   1.First initialize.
 
-CXX = emcc
+
+ifeq ($(OS), Windows_NT)
+	CXX = emcc.bat
+else
+	CXX = emcc
+endif
 OUTPUT = publish/UiCanvas.js
 IMGUI_DIR:=library/imgui
 HEADS += -Ilibrary -I$(IMGUI_DIR) -I$(IMGUI_DIR)/backends
