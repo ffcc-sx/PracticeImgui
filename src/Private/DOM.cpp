@@ -1,9 +1,9 @@
 /*
  * Author  : SunXin
- * Modify  : 2022-11-18
- * Version : 1.0.0.0
+ * Modify  : 2022-11-19
+ * Version : 1.0.0.1
  * Content :
- *   1.First initialize.
+ *   1.Update for header 1.0.0.1.
  */
 
 #include "DOM.h"
@@ -13,8 +13,8 @@
 
 std::vector<Area*>  DOM::windows {};
 
-int          DOM::canvas_width  {800};
-int          DOM::canvas_height {600};
+float           DOM::canvas_width  {800};
+float           DOM::canvas_height {600};
 
 bool DOM::initialize() {
     windows.push_back(new Banner);

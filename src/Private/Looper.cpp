@@ -1,9 +1,9 @@
 /*
  * Author  : SunXin
- * Modify  : 2022-11-16
- * Version : 1.0.0.0
+ * Modify  : 2022-11-18
+ * Version : 1.0.0.1
  * Content :
- *   1.First initialize.
+ *   1.Notify tool panel when canvas size changed.
  */
 
 #include "Looper.h"
@@ -190,8 +190,11 @@ bool Looper::initialize() {
 #ifdef __EMSCRIPTEN__
 
 void Looper::_onCanvasSizeChanged() {
-    glfwSetWindowSize(_window, DOM::canvas_width, DOM::canvas_height);
+    glfwSetWindowSize(_window, DOM::getInt32(DOM::canvas_width), DOM::getInt32(DOM::canvas_height));
     ImGui::SetCurrentContext(ImGui::GetCurrentContext());
+    for_each(DOM::windows.begin(), DOM::windows.end(), [](Area* item) {
+        item->onCanvasSizeChanged();
+    });
 }
 
 #endif // def __EMSCRIPTEN__
