@@ -19,6 +19,7 @@ SOURCES += $(IMGUI_DIR)/backends/imgui_impl_glfw.cpp
 SOURCES += $(IMGUI_DIR)/backends/imgui_impl_opengl3.cpp
 SOURCES += $(wildcard $(IMGUI_DIR)/*.cpp)
 SOURCES += $(wildcard src/Private/*.cpp)
+SOURCES += $(wildcard src/Private/Panels/*.cpp)
 
 LIBS = -lGL
 
