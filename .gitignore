@@ -39,5 +39,5 @@ cmake-build-debug
 cmake-build-release
 
 # ignore deploy directory except debug html
-publish
+publish/*
 !publish/debug.html

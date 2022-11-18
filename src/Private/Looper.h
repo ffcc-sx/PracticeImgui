@@ -25,8 +25,6 @@
 extern "C" {
 #endif
 
-int canvas_get_width();
-int canvas_get_height();
 void resizeCanvas();
 
 class Looper {
@@ -52,10 +50,14 @@ private:
     void                    _loop_body();
     static Looper           *_instance;
 
-    void on_size_changed();
     bool _init_gl();
     bool _init_imgui();
-    void _quit() noexcept;
+
+#ifdef __EMSCRIPTEN__
+private:
+    void _onCanvasSizeChanged();
+
+#endif // def __EMSCRIPTEN__
 };
 
 #ifdef __cplusplus
