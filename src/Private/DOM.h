@@ -50,5 +50,7 @@ public:
 
     bool properties_show = true;
 
+    static bool canvas_shown;
+
 };
 
