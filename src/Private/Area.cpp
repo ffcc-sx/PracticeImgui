@@ -1,12 +1,13 @@
 /*
  * Author  : SunXin
- * Modify  : 2022-11-16
+ * Modify  : 2022-11-18
  * Version : 1.0.0.0
  * Content :
  *   1.First initialize.
  */
 
-#pragma once
+#include "Area.h"
 
-#include <iostream>
-#include <memory>
+
+
+

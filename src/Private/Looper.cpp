@@ -8,15 +8,15 @@
 
 #include "Looper.h"
 #include "JsAdapter.h"
+#include "Area.h"
 
+using namespace std;
 Looper   *Looper::_instance = nullptr;
 
 Looper::Looper()
 : _color(0.45f, 0.55f, 0.60f, 1.00f)
 , _sign_initialized(false)
-, _window(nullptr)
-, _width(800)
-, _height(600) { }
+, _window(nullptr) { }
 
 Looper::~Looper() {
     glfwTerminate();
@@ -30,18 +30,30 @@ void Looper::_loop_body() {
 #ifdef __EMSCRIPTEN__
     int canvas_width    = canvas_get_width();
     int canvas_height   = canvas_get_height();
-    if (canvas_width != _width || canvas_height != _height) {
-        _width = canvas_width;
-        _height = canvas_height;
+    if (canvas_width != DOM::canvas_width || canvas_height != DOM::canvas_height) {
+        DOM::canvas_width = canvas_width;
+        DOM::canvas_height = canvas_height;
         _onCanvasSizeChanged();
     }
 #endif // def __EMSCRIPTEN__
-
+    // Begin render process.
     glfwPollEvents();
-
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
+
+    ImGuiWindowFlags holding_flag1 = 0;
+    holding_flag1 |= ImGuiWindowFlags_NoTitleBar;
+    holding_flag1 |= ImGuiWindowFlags_NoScrollbar;
+    holding_flag1 |= ImGuiWindowFlags_NoResize;
+    holding_flag1 |= ImGuiWindowFlags_NoBackground;
+
+    // TODO: Need a DOM to buffer status of widgets.
+    for_each(DOM::windows.begin(),
+             DOM::windows.end(),
+             [=](Area* item) {
+        item->draw();
+    });
 
     static bool sign_closed_holding = false;
     static bool sign_origin_shown = true;
@@ -130,8 +142,7 @@ bool Looper::_init_gl() {
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     // Open a window and create its OpenGL context
-    _width  = 800;
-    _height = 600;
+
     _window = glfwCreateWindow( 800, 600, "ETest UI[Widget] Debugger", nullptr, nullptr);
     if( _window == nullptr ) {
         fprintf( stderr, "Failed to open GLFW window.\n" );
@@ -172,13 +183,14 @@ bool Looper::initialize() {
     _sign_initialized = true;
     _sign_initialized &= _init_gl();
     _sign_initialized &= _init_imgui();
+    _sign_initialized &= DOM::initialize();
     return _sign_initialized;
 }
 
 #ifdef __EMSCRIPTEN__
 
 void Looper::_onCanvasSizeChanged() {
-    glfwSetWindowSize(_window, _width, _height);
+    glfwSetWindowSize(_window, DOM::canvas_width, DOM::canvas_height);
     ImGui::SetCurrentContext(ImGui::GetCurrentContext());
 }
 
