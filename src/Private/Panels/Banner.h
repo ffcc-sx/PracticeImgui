@@ -25,6 +25,6 @@ private:
 
     static constexpr
     ImVec2          _pos_vec()      { return {DOM::gap_left, DOM::gap_top }; }
-    ImVec2          _size_vec       {DOM::canvas_width - DOM::gap_left * 2, DOM::height_fixed_normal};
+    ImVec2          _size_vec       {DOM::canvas_width - DOM::gap_left * 2, DOM::height_panel_normal};
 
 };
