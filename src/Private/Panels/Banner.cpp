@@ -23,7 +23,7 @@ void Banner::draw() {
 }
 
 void Banner::onCanvasSizeChanged() {
-    _size_vec = ImVec2(DOM::canvas_width - 20, DOM::height_fixed_normal);
+    _size_vec = ImVec2(DOM::canvas_width - 20, DOM::height_panel_normal);
     ImGui::SetWindowPos(_window_name, _pos_vec(), ImGuiCond_FirstUseEver);
     ImGui::SetWindowSize(_window_name, _size_vec, ImGuiCond_FirstUseEver);
 }

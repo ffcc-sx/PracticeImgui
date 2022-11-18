@@ -32,9 +32,11 @@ public:
     }
 
     // ==================== Constant defines ==================== //
-    constexpr static const float    height_fixed_normal    = 64.0f;
-    constexpr static const float    gap_left        = 10.0f;
-    constexpr static const float    gap_top         = 10.0f;
+    constexpr static const float    width_panel_normal  = 256.0f;
+    constexpr static const float    height_panel_normal = 64.0f;
+    constexpr static const float    gap_left            = 10.0f;
+    constexpr static const float    gap_top             = 10.0f;
+    constexpr static const float    gap_padding         = 5.0f;
 
     static std::vector<Area*>      windows;
 
