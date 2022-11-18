@@ -36,6 +36,8 @@ void Looper::_loop_body() {
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
 
+    static bool sign_closed_holding = false;
+    static bool sign_origin_shown = true;
     // 1. Show a simple window.
     // Tip: if we don't call ImGui::Begin()/ImGui::End() the widgets automatically appears in a window called "Debug".
     {
@@ -48,12 +50,43 @@ void Looper::_loop_body() {
         // ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our windows open/close state
         // ImGui::Checkbox("Another Window", &show_another_window);
 
-        // if (ImGui::Button("Button"))                            // Buttons return true when clicked (NB: most widgets return true when edited/activated)
-        //     counter++;
-        // ImGui::SameLine();
-        // ImGui::Text("counter = %d", counter);
+        if (sign_origin_shown) {
+            if (ImGui::Button("Button"))                            // Buttons return true when clicked (NB: most widgets return true when edited/activated)
+                counter++;
+            if (ImGui::IsItemActive() && ImGui::IsMouseDragging(0)) {
+                ImGui::Text("Drag begin");
+                // Show the holding widget.
+                sign_closed_holding = true;
+                sign_origin_shown = false;
+            }
+        }
 
-        // ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+        ImGui::SameLine();
+        ImGui::Text("counter = %d", counter);
+
+        ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+    }
+
+
+    ImGuiWindowFlags holding_flag = 0;
+    holding_flag |= ImGuiWindowFlags_NoTitleBar;
+    holding_flag |= ImGuiWindowFlags_NoScrollbar;
+    holding_flag |= ImGuiWindowFlags_NoResize;
+    holding_flag |= ImGuiWindowFlags_NoBackground;
+    if (sign_closed_holding) {
+        auto io = ImGui::GetIO();
+        ImGui::SetNextWindowPos(io.MousePos, ImGuiCond_Always, ImVec2(0.5, 0.5));
+        if (!ImGui::Begin("Holding Widget", &sign_closed_holding, holding_flag))
+        {
+            // Early out if the window is collapsed, as an optimization.
+            ImGui::End();
+            return;
+        }
+        if (ImGui::Button("Close Me")) {
+            sign_closed_holding = false;
+            sign_origin_shown = true;
+        }
+        ImGui::End();
     }
 
     static bool show_demo_window = true;
