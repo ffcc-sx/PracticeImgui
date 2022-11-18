@@ -11,6 +11,13 @@
 
 Looper   *Looper::_instance = nullptr;
 
+Looper::Looper()
+: _color(0.45f, 0.55f, 0.60f, 1.00f)
+, _sign_initialized(false)
+, _window(nullptr)
+, _width(800)
+, _height(600) { }
+
 Looper::~Looper() {
     glfwTerminate();
 }
@@ -67,7 +74,6 @@ void Looper::_loop_body() {
         ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
     }
 
-
     ImGuiWindowFlags holding_flag = 0;
     holding_flag |= ImGuiWindowFlags_NoTitleBar;
     holding_flag |= ImGuiWindowFlags_NoScrollbar;
@@ -101,7 +107,7 @@ void Looper::_loop_body() {
     glfwMakeContextCurrent(_window);
     glfwGetFramebufferSize(_window, &display_w, &display_h);
     glViewport(0, 0, display_w, display_h);
-    glClearColor(_color->x, _color->y, _color->z, _color->w);
+    glClearColor(_color.x, _color.y, _color.z, _color.w);
     glClear(GL_COLOR_BUFFER_BIT);
 
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -113,7 +119,6 @@ void Looper::start() {
     emscripten_set_main_loop(Looper::_loop_process, 0, 1);
 }
 
-
 bool Looper::_init_gl() {
     if( !glfwInit() ) {
         std::cout << "[Looper] Failed to initialize GLFW" << std::endl;
@@ -123,8 +128,6 @@ bool Looper::_init_gl() {
     // 4x antialiasing
     glfwWindowHint(GLFW_SAMPLES, 4);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
-    _color = new ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
     // Open a window and create its OpenGL context
     _width  = 800;
@@ -165,10 +168,11 @@ bool Looper::_init_imgui() {
 }
 
 bool Looper::initialize() {
-    auto sign_succeed = true;
-    sign_succeed &= _init_gl();
-    sign_succeed &= _init_imgui();
-    return sign_succeed;
+    if(_sign_initialized) return true;
+    _sign_initialized = true;
+    _sign_initialized &= _init_gl();
+    _sign_initialized &= _init_imgui();
+    return _sign_initialized;
 }
 
 #ifdef __EMSCRIPTEN__

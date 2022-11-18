@@ -28,7 +28,7 @@ extern "C" int main(int argc, char** argv) {
         return 1;
     } else {
         // Mark: this method will block thread.
-        Looper::instance()->start();
+        Looper::start();
     }
 
     std::cout << "Main loop of UI thread has been broken." << std::endl;

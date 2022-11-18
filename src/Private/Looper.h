@@ -25,38 +25,46 @@
 extern "C" {
 #endif
 
-void resizeCanvas();
-
 class Looper {
 public:
+    /// \brief Singleton referencer.
     static Looper* instance() { if(!_instance) _instance = new Looper; return _instance; }
+    /// \brief Initialize looper.
     bool initialize();
-    void start();
+    /// \brief Start main looper for edit or data refresh.
+    static void start();
 
-    [[nodiscard]] static GLFWwindow*    window()    { return _instance->_window; }
-    [[nodiscard]] static int            width()     { return _instance->_width; }
-    [[nodiscard]] static int            height()    { return _instance->_height; }
+    /// \brief Get width of canvas.
+    [[nodiscard]] static int    width()  { return _instance->_width; }
+    /// \brief Get height of canvas.
+    [[nodiscard]] static int    height() { return _instance->_height; }
 
 private:
-    Looper() = default;
+    /// \brief Forbidden with singleton.
+    Looper();
+    /// \brief Forbidden with singleton.
     ~Looper();
 
-    GLFWwindow       *_window;
-    int              _width;
-    int              _height;
-    ImVec4           *_color;
-
+    /// \brief Export static function pointer to imgui and avoid heads importing with main.
     static inline void      _loop_process();
+    /// \brief Rendering process function.
     void                    _loop_body();
-    static Looper           *_instance;
+    /// \brief Initializer for GLFW, must invoke before imgui for demo reason.
+    bool                    _init_gl();
+    /// \brief Initializer for ImGui module.
+    bool                    _init_imgui();
 
-    bool _init_gl();
-    bool _init_imgui();
+    bool            _sign_initialized;  //-< Guarantee GLFW and ImGui initialized before start().
+    GLFWwindow      *_window;           //-< GLFW window instance.
+    int             _width;             //-< Width of canvas to fit html loader.
+    int             _height;            //-< Height of canvas to fit html loader.
+    ImVec4          _color;             //-< Background color of canvas configure.
+    static Looper   *_instance;         //-< For singleton looper class.
 
 #ifdef __EMSCRIPTEN__
 private:
+    /// \brief Synchronize with front-end canvas.
     void _onCanvasSizeChanged();
-
 #endif // def __EMSCRIPTEN__
 };
 
