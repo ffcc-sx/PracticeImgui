@@ -9,15 +9,37 @@
 #include "Toolbox.h"
 
 Toolbox::Toolbox() {
-    _style_flag |= ImGuiWindowFlags_NoDecoration;
     _style_flag |= ImGuiWindowFlags_NoMove;
+    _style_flag |= ImGuiWindowFlags_NoCollapse;
 }
 
 void Toolbox::draw() {
     ImGui::SetNextWindowPos(_pos_vec, ImGuiCond_FirstUseEver);
     ImGui::SetNextWindowSize(_size_vec, ImGuiCond_FirstUseEver);
     ImGui::Begin(_window_name, nullptr, _style_flag);
-    ImGui::Text("TODO: Draw toolbox tool panel.");
+
+    if (ImGui::CollapsingHeader("Basic")) {
+
+
+
+        if (ImGui::BeginTable("table_basic", 2)) {
+
+            ImGui::TableNextRow();
+            ImGui::TableSetColumnIndex(0);
+            ImGui::BulletText("Text Label");
+            ImGui::TableSetColumnIndex(1);
+            ImGui::Text("Text");
+
+            ImGui::TableNextRow();
+            ImGui::TableSetColumnIndex(0);
+            ImGui::BulletText("Push Button");
+            ImGui::TableSetColumnIndex(1);
+            ImGui::Button("Button");
+
+            ImGui::EndTable();
+        }
+    }
+
     ImGui::End();
 }
 
