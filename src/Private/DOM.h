@@ -46,7 +46,7 @@ public:
         int         type    {WidgetUnknown};
         ImVec2      size    {};
         ImVec2      pos     {};
-        // 0:Normal; 1:Moving;
+        // 0:Normal; 1:Moving; 2:Appending;
         int         state   {};
     };
 
@@ -72,6 +72,14 @@ public:
     static bool             canvas_shown;
     static float            canvas_width;
     static float            canvas_height;
+    static float            canvas_visible_left;
+    static float            canvas_visible_top;
+    static float            canvas_visible_right;
+    static float            canvas_visible_bottom;
+    static float            canvas_valid_left;
+    static float            canvas_valid_top;
+    static float            canvas_valid_right;
+    static float            canvas_valid_bottom;
 
     static unordered_map<int, widget_info_t> canvas_widgets;
     static int              _canvas_id_serial;

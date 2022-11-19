@@ -38,8 +38,21 @@ void DragHelper::update() {
             for_each(DOM::canvas_widgets.begin(), DOM::canvas_widgets.end(),
                      [](decltype(DOM::canvas_widgets)::value_type &item) {
                 if(item.second.state == 1) {
-                    item.second.pos = ImGui::GetIO().MousePos;
+                    auto pos_mouse = ImGui::GetIO().MousePos;
+                    item.second.pos = pos_mouse;
+                    if(item.second.pos.x < DOM::canvas_visible_left)    item.second.pos.x = DOM::canvas_visible_left;
+                    if(item.second.pos.x > DOM::canvas_visible_right)   item.second.pos.x = DOM::canvas_visible_right;
+                    if(item.second.pos.y < DOM::canvas_visible_top)     item.second.pos.y = DOM::canvas_visible_top;
+                    if(item.second.pos.y > DOM::canvas_visible_bottom)  item.second.pos.y = DOM::canvas_visible_bottom;
+
                     item.second.state = 0;
+                    cout << "area:"
+                         << DOM::canvas_visible_left << "|" << DOM::canvas_visible_right << "|"
+                         << DOM::canvas_visible_top << "|" << DOM::canvas_visible_bottom << endl;
+                    cout << "mouse:"
+                         << pos_mouse.x << "|" << pos_mouse.y << endl;
+                    cout << "set pos:"
+                         << item.second.pos.x << "|" << item.second.pos.y << endl;
                 }
             });
         }

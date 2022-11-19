@@ -25,6 +25,10 @@ void Canvas::draw() {
     // Empty child with border only used to show content area.
     ImGui::BeginGroup();
     auto work_rect = ImGui::GetCurrentContext()->CurrentWindow->WorkRect;
+    DOM::canvas_visible_left    = work_rect.Min.x;
+    DOM::canvas_visible_top     = work_rect.Min.y;
+    DOM::canvas_visible_right   = work_rect.Max.x;
+    DOM::canvas_visible_bottom  = work_rect.Max.x;
     auto work_width = work_rect.Max.x - work_rect.Min.x;
     auto work_height = work_rect.Max.y - work_rect.Min.y;
     ImGui::BeginChild("canvas_content", ImVec2(work_width, work_height), true, _style_flag);
@@ -67,6 +71,7 @@ void Canvas::draw() {
             case DOM::WidgetPushButton: {
                 ImGui::Button("Button");
                 if (ImGui::IsItemActive() && ImGui::IsMouseDragging(0)) {
+                    // TODO: Append begin source;
                     cout << "Widget is moving:" << widget_id << endl;
                     // Widget must exist.
                     auto &&target = DOM::canvas_widgets.at(widget.first);

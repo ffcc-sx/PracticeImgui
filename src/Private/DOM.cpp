@@ -27,6 +27,14 @@ bool            DOM::banner_shown   {true};
 float           DOM::canvas_width   {800};
 float           DOM::canvas_height  {600};
 bool            DOM::canvas_shown   {true};
+float           DOM::canvas_visible_left    {};
+float           DOM::canvas_visible_top     {};
+float           DOM::canvas_visible_right   {};
+float           DOM::canvas_visible_bottom  {};
+float           DOM::canvas_valid_left      {};
+float           DOM::canvas_valid_top       {};
+float           DOM::canvas_valid_right     {};
+float           DOM::canvas_valid_bottom    {};
 
 int             DOM::_canvas_id_serial {0};
 unordered_map<int, DOM::widget_info_t> DOM::canvas_widgets {};
