@@ -22,27 +22,24 @@ void Canvas::draw() {
     ImGui::SetNextWindowPos(_pos_vec, ImGuiCond_FirstUseEver);
     ImGui::SetNextWindowSize(_size_vec, ImGuiCond_FirstUseEver);
     ImGui::Begin(_window_name, &DOM::canvas_shown, _style_flag);
+    // Empty child with border only used to show content area.
     ImGui::BeginGroup();
     auto work_rect = ImGui::GetCurrentContext()->CurrentWindow->WorkRect;
     auto work_width = work_rect.Max.x - work_rect.Min.x;
     auto work_height = work_rect.Max.y - work_rect.Min.y;
     ImGui::BeginChild("canvas_content", ImVec2(work_width, work_height), true, _style_flag);
-    // Empty child with border only used to show content area.
     ImGui::EndChild();
     ImGui::EndGroup();
     // Begin render canvas content sub window.
     if (!ImGui::IsMouseDragging(0) && ImGui::BeginDragDropTarget()) {
-        cout << "Drag helper dropped" << endl;
-        if (ImGui::AcceptDragDropPayload("drag_helper")) {
-            const ImGuiPayload *payload = ImGui::AcceptDragDropPayload(IMGUI_PAYLOAD_TYPE_COLOR_3F);
-            // if (const ImGuiPayload *payload = ImGui::AcceptDragDropPayload(IMGUI_PAYLOAD_TYPE_COLOR_4F))
-            //     memcpy((float *) &saved_palette[n], payload->Data, sizeof(float) * 4);
+        if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("drag_helper", ImGuiDragDropFlags_AcceptPeekOnly)) {
+            cout << "BeginDragDropTarget" << endl;
+            cout << payload->DataType << endl;
             ImGui::EndDragDropTarget();
         }
     }
 
     ImGui::End();
-
 }
 
 void Canvas::onCanvasSizeChanged() {
