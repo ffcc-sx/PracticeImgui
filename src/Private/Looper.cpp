@@ -8,7 +8,7 @@
 
 #include "Looper.h"
 #include "JsAdapter.h"
-#include "Area.h"
+#include "DOM.h"
 
 using namespace std;
 Looper   *Looper::_instance = nullptr;
@@ -92,19 +92,11 @@ void Looper::_loop_body() {
     holding_flag |= ImGuiWindowFlags_NoResize;
     holding_flag |= ImGuiWindowFlags_NoBackground;
     if (sign_closed_holding) {
-        auto io = ImGui::GetIO();
-        ImGui::SetNextWindowPos(io.MousePos, ImGuiCond_Always, ImVec2(0.5, 0.5));
-        if (!ImGui::Begin("Holding Widget", &sign_closed_holding, holding_flag))
-        {
-            // Early out if the window is collapsed, as an optimization.
-            ImGui::End();
-            return;
-        }
-        if (ImGui::Button("Close Me")) {
-            sign_closed_holding = false;
-            sign_origin_shown = true;
-        }
-        ImGui::End();
+
+    }
+
+    if (DOM::drag_shown) {
+        DOM::drag_helper->draw();
     }
 
     static bool show_demo_window = true;

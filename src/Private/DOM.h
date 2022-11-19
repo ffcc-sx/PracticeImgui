@@ -11,8 +11,11 @@
 #pragma once
 
 #include "Common.h"
+#include "DragHelper.h"
+#include "Area.h"
 
-class Area;
+using namespace std;
+
 /// \brief Static instance for view status and data storage.
 class DOM {
 
@@ -31,7 +34,11 @@ public:
         return *(int32_t *) &x;
     }
 
-    // ==================== Constant defines ==================== //
+    // ==================== Drag helper         ====================//
+    static unique_ptr<DragHelper>   drag_helper;
+    static bool         drag_shown;
+
+    // ==================== Constant defines    ====================//
     constexpr static const float    width_panel_normal  = 256.0f;
     constexpr static const float    height_panel_normal = 64.0f;
     constexpr static const float    gap_left            = 10.0f;

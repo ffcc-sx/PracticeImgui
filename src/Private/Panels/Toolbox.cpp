@@ -19,22 +19,24 @@ void Toolbox::draw() {
     ImGui::Begin(_window_name, nullptr, _style_flag);
 
     if (ImGui::CollapsingHeader("Basic")) {
-
-
-
         if (ImGui::BeginTable("table_basic", 2)) {
-
+            // Text widget
             ImGui::TableNextRow();
             ImGui::TableSetColumnIndex(0);
             ImGui::BulletText("Text Label");
             ImGui::TableSetColumnIndex(1);
             ImGui::Text("Text");
-
+            // Button widget
             ImGui::TableNextRow();
             ImGui::TableSetColumnIndex(0);
             ImGui::BulletText("Push Button");
             ImGui::TableSetColumnIndex(1);
+
             ImGui::Button("Button");
+            if (ImGui::IsItemActive() && ImGui::IsMouseDragging(0)) {
+                DOM::drag_shown = true;
+                // TODO: Type needed.
+            }
 
             ImGui::EndTable();
         }

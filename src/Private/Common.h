@@ -22,4 +22,6 @@
 #include "imgui/backends/imgui_impl_opengl3.h"
 
 #include <iostream>
+#include <algorithm>
+#include <vector>
 #include <memory>

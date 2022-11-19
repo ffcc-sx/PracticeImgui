@@ -10,6 +10,7 @@
 
 #include "../Common.h"
 #include "../Area.h"
+#include "../DOM.h"
 
 class Banner : public Area {
 

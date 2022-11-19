@@ -10,7 +10,7 @@
 
 #include "../Common.h"
 #include "../Area.h"
-
+#include "../DOM.h"
 
 class Properties : public Area {
 
