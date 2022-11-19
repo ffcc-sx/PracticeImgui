@@ -21,4 +21,8 @@ EM_JS(void, resizeCanvas, (), {
     js_resizeCanvas();
 });
 
+EM_JS(void, js_mark, (), {
+    console.log("js_mark");
+});
+
 #endif

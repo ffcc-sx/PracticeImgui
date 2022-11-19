@@ -10,12 +10,16 @@
 
 #include "../Common.h"
 #include "../Area.h"
-
+#include "../DOM.h"
 
 class Canvas : public Area {
 
 public:
     Canvas();
+
+    void        setCanvasType() {}
+    void        canvasType() {}
+    void        removeWidget() { };
 
     void        draw() override;
     void        onCanvasSizeChanged() override;

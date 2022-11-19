@@ -26,7 +26,7 @@ LIBS = -lGL
 FLAGS := -s USE_WEBGL2=1 -s USE_GLFW=3 -s FULL_ES3=1
 #WEBGL_VER = USE_GLFW=2
 FLAGS += -s WASM=1
-FLAGS += -std=c++11 -O2
+FLAGS += -std=c++11
 FLAGS += --preload-file resources/fonts
 
 
