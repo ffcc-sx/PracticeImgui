@@ -11,6 +11,7 @@ DragHelper::DragHelper() {
     _style_flag |= ImGuiWindowFlags_NoMove;
     _style_flag |= ImGuiWindowFlags_NoSavedSettings;
     _style_flag |= ImGuiWindowFlags_NoScrollbar;
+    _style_flag |= ImGuiWindowFlags_NoBackground;
 }
 
 void DragHelper::draw() {

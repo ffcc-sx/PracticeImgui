@@ -36,6 +36,8 @@ void Toolbox::draw() {
             if (ImGui::IsItemActive() && ImGui::IsMouseDragging(0)) {
                 DOM::drag_shown = true;
                 // TODO: Type needed.
+            } else if (!ImGui::IsMouseDragging(0)) {
+                DOM::drag_shown = false;
             }
 
             ImGui::EndTable();
