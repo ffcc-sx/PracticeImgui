@@ -36,7 +36,7 @@ void Canvas::draw() {
             auto payload_data = (const DOM::widget_info_t*)payload->Data;
             auto imgui_io = ImGui::GetIO();
             DOM::widget_info_t info(*payload_data);
-            info.id = DOM::_canvas_id_serial++;
+            info.id = ++DOM::_canvas_id_serial;
             info.pos = imgui_io.MousePos;
             cout << "new widget appended("
                 << "id:" << info.id << "|"
@@ -55,16 +55,26 @@ void Canvas::draw() {
     widgets_flags |= ImGuiWindowFlags_NoSavedSettings;
     widgets_flags |= ImGuiWindowFlags_NoScrollbar;
     widgets_flags |= ImGuiWindowFlags_NoBackground;
-    for(const auto & canvas_widget : DOM::canvas_widgets) {
-        ImGui::SetNextWindowPos(canvas_widget.second.pos, ImGuiCond_Always, ImVec2(0.5, 0.5));
+    for(const auto & widget : DOM::canvas_widgets) {
+        // TODO: check widget state.
+        if(widget.second.state == 1) continue;
+        ImGui::SetNextWindowPos(widget.second.pos, ImGuiCond_Always, ImVec2(0.5, 0.5));
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
         char widget_id[32];
-        sprintf(widget_id, "##%d", canvas_widget.second.id);
+        sprintf(widget_id, "##%d", widget.second.id);
         ImGui::Begin(widget_id, nullptr, widgets_flags);
-        cout << "New ID is:" << widget_id << endl;
-        switch (canvas_widget.second.type) {
+        switch (widget.second.type) {
             case DOM::WidgetPushButton: {
                 ImGui::Button("Button");
+                if (ImGui::IsItemActive() && ImGui::IsMouseDragging(0)) {
+                    cout << "Widget is moving:" << widget_id << endl;
+                    // Widget must exist.
+                    auto &&target = DOM::canvas_widgets.at(widget.first);
+                    // Update canvas widget state;
+                    target.state = 1;
+                    DOM::drag_target_id = target.id;
+                    DOM::drag_shown = true;
+                }
                 break;
             }
         }

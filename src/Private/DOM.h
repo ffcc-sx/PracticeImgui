@@ -31,18 +31,23 @@ public:
             type = inst.type;
             size = inst.size;
             pos  = inst.pos;
+            state= inst.state;
         };
-        void operator=(const widget_info_t &inst) {
+        widget_info_t &operator=(const widget_info_t &inst) {
             this->id   = inst.id;
             this->type = inst.type;
             this->size = inst.size;
             this->pos  = inst.pos;
+            this->state= inst.state;
+            return *this;
         };
 
         int         id      {};
         int         type    {WidgetUnknown};
         ImVec2      size    {};
         ImVec2      pos     {};
+        // 0:Normal; 1:Moving;
+        int         state   {};
     };
 
     static bool    initialize();
@@ -72,7 +77,10 @@ public:
     static int              _canvas_id_serial;
 
     // ==================== Drag helper         ====================//
+    enum class DragActionType { ActionNone, ActionAppendFromToolbox, ActionMoveOnCanvas };
     static unique_ptr<DragHelper>   drag_helper;
+    static DragActionType   drag_action;
+    static int              drag_target_id;
     static bool             drag_shown;
     static ImVec2           drop_vec2;
     static widget_info_t    drag_info;

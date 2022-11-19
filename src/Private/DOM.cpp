@@ -15,10 +15,12 @@
 std::vector<Area*>  DOM::windows {};
 bool            DOM::demo_shown     {false};
 
-unique_ptr<DragHelper>      DOM::drag_helper   {};
-bool            DOM::drag_shown     {false};
-ImVec2          DOM::drop_vec2      {0.0f, 0.0f};
-DOM::widget_info_t  DOM::drag_info      {};
+unique_ptr<DragHelper>  DOM::drag_helper   {};
+bool                    DOM::drag_shown     {false};
+ImVec2                  DOM::drop_vec2      {0.0f, 0.0f};
+DOM::widget_info_t      DOM::drag_info      {};
+DOM::DragActionType     DOM::drag_action    {DOM::DragActionType::ActionNone};
+int                     DOM::drag_target_id {};
 
 bool            DOM::banner_shown   {true};
 

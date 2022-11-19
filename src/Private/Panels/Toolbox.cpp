@@ -47,7 +47,6 @@ void Toolbox::draw() {
                 // TODO: Mark ref point type.
                 // TODO: Use payload trans drag source.
             }
-
             ImGui::EndTable();
         }
     }

@@ -31,4 +31,21 @@ void DragHelper::draw() {
     ImGui::End();
 }
 
+void DragHelper::update() {
+    if(_current_state != DOM::drag_shown) {
+        _current_state = DOM::drag_shown;
+        if(!_current_state) {
+            for_each(DOM::canvas_widgets.begin(), DOM::canvas_widgets.end(),
+                     [](decltype(DOM::canvas_widgets)::value_type &item) {
+                if(item.second.state == 1) {
+                    item.second.pos = ImGui::GetIO().MousePos;
+                    item.second.state = 0;
+                }
+            });
+        }
+    }
+    if(DOM::drag_shown) draw();
+
+}
+
 
