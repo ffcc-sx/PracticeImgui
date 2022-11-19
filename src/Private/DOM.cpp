@@ -15,9 +15,13 @@
 
 
 std::vector<Area*>  DOM::windows {};
+bool            DOM::demo_shown   {false};
 
 unique_ptr<DragHelper>      DOM::drag_helper   {};
 bool            DOM::drag_shown     {false};
+ImVec2          DOM::drop_vec2      {0.0f, 0.0f};
+
+bool            DOM::banner_shown   {true};
 
 float           DOM::canvas_width   {800};
 float           DOM::canvas_height  {600};

@@ -34,9 +34,22 @@ public:
         return *(int32_t *) &x;
     }
 
+    // ==================== Global status       ====================//
+    static std::vector<Area*>      windows;
+    static bool         demo_shown;
+
+    // ==================== Canvas status       ====================//
+    static bool         canvas_shown;
+    static float        canvas_width;
+    static float        canvas_height;
+
     // ==================== Drag helper         ====================//
     static unique_ptr<DragHelper>   drag_helper;
     static bool         drag_shown;
+    static ImVec2       drop_vec2;
+
+    // ==================== Banner status       ====================//
+    static bool         banner_shown;
 
     // ==================== Constant defines    ====================//
     constexpr static const float    width_panel_normal  = 256.0f;
@@ -45,19 +58,6 @@ public:
     constexpr static const float    gap_top             = 10.0f;
     constexpr static const float    gap_padding         = 5.0f;
 
-    static std::vector<Area*>      windows;
-
-    static float          canvas_width;
-    static float          canvas_height;
-
-    bool debug_shown = true;
-
-    // NoUsed
-    bool banner_show = true;
-
     bool properties_show = true;
-
-    static bool canvas_shown;
-
 };
 

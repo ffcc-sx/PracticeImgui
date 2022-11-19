@@ -21,6 +21,15 @@ void Canvas::draw() {
     ImGui::SetNextWindowPos(_pos_vec, ImGuiCond_FirstUseEver);
     ImGui::SetNextWindowSize(_size_vec, ImGuiCond_FirstUseEver);
     ImGui::Begin(_window_name, &DOM::canvas_shown, _style_flag);
+    if (ImGui::BeginDragDropTarget()) {
+        if(ImGui::AcceptDragDropPayload("drag_helper")) {
+            const ImGuiPayload *payload = ImGui::AcceptDragDropPayload(IMGUI_PAYLOAD_TYPE_COLOR_3F);
+            // if (const ImGuiPayload *payload = ImGui::AcceptDragDropPayload(IMGUI_PAYLOAD_TYPE_COLOR_4F))
+            //     memcpy((float *) &saved_palette[n], payload->Data, sizeof(float) * 4);
+            cout << "Received drop signal." << endl;
+            ImGui::EndDragDropTarget();
+        }
+    }
     ImGui::Text("TODO: Draw canvas layout.");
     ImGui::End();
 }
@@ -30,4 +39,8 @@ void Canvas::onCanvasSizeChanged() {
     _size_vec = ImVec2(DOM::canvas_width - DOM::gap_left*2 - DOM::width_panel_normal*2 - DOM::gap_padding*2, DOM::canvas_height - DOM::gap_top*2 - DOM::gap_padding - DOM::height_panel_normal);
     ImGui::SetWindowPos(_window_name, _pos_vec, ImGuiCond_FirstUseEver);
     ImGui::SetWindowSize(_window_name, _size_vec, ImGuiCond_FirstUseEver);
+}
+
+void Canvas::appendWidget() {
+
 }

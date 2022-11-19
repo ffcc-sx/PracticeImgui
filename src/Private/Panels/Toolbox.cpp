@@ -36,8 +36,15 @@ void Toolbox::draw() {
             if (ImGui::IsItemActive() && ImGui::IsMouseDragging(0)) {
                 DOM::drag_shown = true;
                 // TODO: Type needed.
+                if(ImGui::BeginDragDropSource(ImGuiDragDropFlags_None)) {
+                    ImGui::SetDragDropPayload("drag_helper", nullptr, 0);
+                    ImGui::Text("Push button widget");
+                    ImGui::EndDragDropSource();
+                }
             } else if (!ImGui::IsMouseDragging(0)) {
                 DOM::drag_shown = false;
+                // TODO: Mark ref point type.
+                // TODO: Use payload trans drag source.
             }
 
             ImGui::EndTable();
