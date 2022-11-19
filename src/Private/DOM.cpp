@@ -15,16 +15,26 @@
 std::vector<Area*>  DOM::windows {};
 bool            DOM::demo_shown     {false};
 
-unique_ptr<DragHelper>      DOM::drag_helper   {};
-bool            DOM::drag_shown     {false};
-ImVec2          DOM::drop_vec2      {0.0f, 0.0f};
-DOM::widget_info_t  DOM::drag_info      {};
+unique_ptr<DragHelper>  DOM::drag_helper   {};
+bool                    DOM::drag_shown     {false};
+ImVec2                  DOM::drop_vec2      {0.0f, 0.0f};
+DOM::widget_info_t      DOM::drag_info      {};
+DOM::DragActionType     DOM::drag_action    {DOM::DragActionType::ActionNone};
+int                     DOM::drag_target_id {};
 
 bool            DOM::banner_shown   {true};
 
 float           DOM::canvas_width   {800};
 float           DOM::canvas_height  {600};
 bool            DOM::canvas_shown   {true};
+float           DOM::canvas_visible_left    {};
+float           DOM::canvas_visible_top     {};
+float           DOM::canvas_visible_right   {};
+float           DOM::canvas_visible_bottom  {};
+float           DOM::canvas_valid_left      {};
+float           DOM::canvas_valid_top       {};
+float           DOM::canvas_valid_right     {};
+float           DOM::canvas_valid_bottom    {};
 
 int             DOM::_canvas_id_serial {0};
 unordered_map<int, DOM::widget_info_t> DOM::canvas_widgets {};

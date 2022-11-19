@@ -38,6 +38,7 @@ void Toolbox::draw() {
                 // TODO: Type needed.
                 if(ImGui::BeginDragDropSource(ImGuiDragDropFlags_None)) {
                     DOM::drag_info.type = DOM::WidgetPushButton;
+                    DOM::drag_info.state = 2;   // Appending.
                     ImGui::SetDragDropPayload("drag_helper", &DOM::drag_info, sizeof(DOM::drag_info));
                     ImGui::Text("Push button widget");
                     ImGui::EndDragDropSource();
@@ -47,7 +48,6 @@ void Toolbox::draw() {
                 // TODO: Mark ref point type.
                 // TODO: Use payload trans drag source.
             }
-
             ImGui::EndTable();
         }
     }

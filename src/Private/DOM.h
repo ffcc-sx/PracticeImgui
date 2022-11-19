@@ -31,18 +31,23 @@ public:
             type = inst.type;
             size = inst.size;
             pos  = inst.pos;
+            state= inst.state;
         };
-        void operator=(const widget_info_t &inst) {
+        widget_info_t &operator=(const widget_info_t &inst) {
             this->id   = inst.id;
             this->type = inst.type;
             this->size = inst.size;
             this->pos  = inst.pos;
+            this->state= inst.state;
+            return *this;
         };
 
         int         id      {};
         int         type    {WidgetUnknown};
         ImVec2      size    {};
         ImVec2      pos     {};
+        // 0:Normal; 1:Moving; 2:Appending;
+        int         state   {};
     };
 
     static bool    initialize();
@@ -67,12 +72,23 @@ public:
     static bool             canvas_shown;
     static float            canvas_width;
     static float            canvas_height;
+    static float            canvas_visible_left;
+    static float            canvas_visible_top;
+    static float            canvas_visible_right;
+    static float            canvas_visible_bottom;
+    static float            canvas_valid_left;
+    static float            canvas_valid_top;
+    static float            canvas_valid_right;
+    static float            canvas_valid_bottom;
 
     static unordered_map<int, widget_info_t> canvas_widgets;
     static int              _canvas_id_serial;
 
     // ==================== Drag helper         ====================//
+    enum class DragActionType { ActionNone, ActionAppendFromToolbox, ActionMoveOnCanvas };
     static unique_ptr<DragHelper>   drag_helper;
+    static DragActionType   drag_action;
+    static int              drag_target_id;
     static bool             drag_shown;
     static ImVec2           drop_vec2;
     static widget_info_t    drag_info;

@@ -55,9 +55,7 @@ void Looper::_loop_body() {
         item->draw();
     });
 
-    if (DOM::drag_shown) {
-        DOM::drag_helper->draw();
-    }
+    DOM::drag_helper->update();
 
     if(DOM::demo_shown) {
         ImGui::SetNextWindowPos(ImVec2(50, 20), ImGuiCond_FirstUseEver);
