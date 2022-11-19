@@ -37,7 +37,8 @@ void Toolbox::draw() {
                 DOM::drag_shown = true;
                 // TODO: Type needed.
                 if(ImGui::BeginDragDropSource(ImGuiDragDropFlags_None)) {
-                    ImGui::SetDragDropPayload("drag_helper", nullptr, 0);
+                    DOM::drag_info.type = DOM::WidgetPushButton;
+                    ImGui::SetDragDropPayload("drag_helper", &DOM::drag_info, sizeof(DOM::drag_info));
                     ImGui::Text("Push button widget");
                     ImGui::EndDragDropSource();
                 }

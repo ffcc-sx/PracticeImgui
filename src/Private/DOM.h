@@ -20,6 +20,31 @@ using namespace std;
 class DOM {
 
 public:
+    enum DragType {
+        WidgetUnknown,
+        WidgetPushButton,
+    };
+    struct widget_info_t {
+        widget_info_t() = default;
+        widget_info_t(const widget_info_t &inst) {
+            id   = inst.id;
+            type = inst.type;
+            size = inst.size;
+            pos  = inst.pos;
+        };
+        void operator=(const widget_info_t &inst) {
+            this->id   = inst.id;
+            this->type = inst.type;
+            this->size = inst.size;
+            this->pos  = inst.pos;
+        };
+
+        int         id      {};
+        int         type    {WidgetUnknown};
+        ImVec2      size    {};
+        ImVec2      pos     {};
+    };
+
     static bool    initialize();
     void    loadCommonConfigure()   { }
     void    loadProjectConfig()     { }
@@ -39,17 +64,21 @@ public:
     static bool         demo_shown;
 
     // ==================== Canvas status       ====================//
-    static bool         canvas_shown;
-    static float        canvas_width;
-    static float        canvas_height;
+    static bool             canvas_shown;
+    static float            canvas_width;
+    static float            canvas_height;
+
+    static unordered_map<int, widget_info_t> canvas_widgets;
+    static int              _canvas_id_serial;
 
     // ==================== Drag helper         ====================//
     static unique_ptr<DragHelper>   drag_helper;
-    static bool         drag_shown;
-    static ImVec2       drop_vec2;
+    static bool             drag_shown;
+    static ImVec2           drop_vec2;
+    static widget_info_t    drag_info;
 
     // ==================== Banner status       ====================//
-    static bool         banner_shown;
+    static bool             banner_shown;
 
     // ==================== Constant defines    ====================//
     constexpr static const float    width_panel_normal  = 256.0f;

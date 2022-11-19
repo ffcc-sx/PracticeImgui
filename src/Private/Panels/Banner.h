@@ -16,6 +16,8 @@ class Banner : public Area {
 
 public:
     Banner();
+    Banner(const Banner &banner) = default;
+    Banner &operator=(const Banner &banner) = default;
 
     void        draw() override;
     void        onCanvasSizeChanged() override;

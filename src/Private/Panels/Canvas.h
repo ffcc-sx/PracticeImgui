@@ -17,7 +17,8 @@ class Canvas : public Area {
 public:
     Canvas();
 
-    void        appendWidget();
+    void        setCanvasType() {}
+    void        canvasType() {}
     void        removeWidget() { };
 
     void        draw() override;

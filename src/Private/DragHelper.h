@@ -15,7 +15,7 @@ class DragHelper : public Area {
 
 public:
     DragHelper();
-    void        draw() override;
+    void            draw() override;
 
 private:
     ImGuiWindowFlags _style_flag = 0;
