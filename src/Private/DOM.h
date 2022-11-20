@@ -90,7 +90,7 @@ public:
     static DragActionType   drag_action;
     static int              drag_target_id;
     static bool             drag_shown;
-    static ImVec2           drop_vec2;
+    static ImVec2           drag_vec2;
     static widget_info_t    drag_info;
 
     // ==================== Banner status       ====================//
