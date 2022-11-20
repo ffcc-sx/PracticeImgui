@@ -42,6 +42,7 @@ void Canvas::draw() {
             DOM::widget_info_t info(*payload_data);
             info.id = ++DOM::_canvas_id_serial;
             info.pos = imgui_io.MousePos;
+            info.size = ImVec2(128, 32);
             cout << "new widget appended("
                 << "id:" << info.id << "|"
                 << "type:" << info.type << "|"
@@ -69,14 +70,15 @@ void Canvas::draw() {
         ImGui::Begin(widget_id, nullptr, widgets_flags);
         switch (widget.second.type) {
             case DOM::WidgetPushButton: {
-                ImGui::Button("Button");
+                ImGui::Button("Button", widget.second.size);
                 if (ImGui::IsItemActive() && ImGui::IsMouseDragging(0)) {
                     // TODO: Append begin source;
                     cout << "Widget is moving:" << widget_id << endl;
                     // Widget must exist.
                     auto &&target = DOM::canvas_widgets.at(widget.first);
                     // Update canvas widget state;
-                    target.state = 1;
+                    target.state = 1;   // Moving.
+                    DOM::drag_action = DOM::DragActionType::ActionMoveOnCanvas;
                     DOM::drag_target_id = target.id;
                     DOM::drag_shown = true;
                 }
