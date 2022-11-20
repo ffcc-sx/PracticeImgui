@@ -16,22 +16,45 @@ DragHelper::DragHelper() {
 
 void DragHelper::draw() {
     auto io = ImGui::GetIO();
-    ImGui::SetNextWindowPos(io.MousePos, ImGuiCond_Always, ImVec2(0.5, 0.5));
+
+    auto &&hold_size = ImVec2(128, 32);
+    auto &&hold_pos = ImVec2();
+    if(DOM::drag_action == DOM::DragActionType::ActionAppendFromToolbox) {
+        ImGui::SetNextWindowPos(io.MousePos, ImGuiCond_Always, ImVec2(0.5, 0.5));
+    } else if (DOM::drag_action == DOM::DragActionType::ActionMoveOnCanvas) {
+        auto target = DOM::canvas_widgets.at(DOM::drag_target_id);
+        auto delta = ImGui::GetMouseDragDelta();
+        hold_pos.x = target.pos.x + delta.x;
+        hold_pos.y = target.pos.y + delta.y;
+        ImGui::SetNextWindowPos(hold_pos, ImGuiCond_Always, ImVec2(0.5, 0.5));
+        // TODO: Update hold size with user setting.
+    }
+
     ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
-    if (!ImGui::Begin("Holding Widget", &DOM::drag_shown, _style_flag))
+    if (!ImGui::Begin("Holding Widget", nullptr, _style_flag))
     {
         // Early out if the window is collapsed, as an optimization.
         ImGui::End();
         return;
     }
-    if (ImGui::Button("Button")) {
-        DOM::drag_shown = false;
-    }
+    // TODO: The size of initialize should be user **or** default.
+    ImGui::Button("Button", ImVec2(128, 32));
+
+    //switch (target.type) {
+    //    case DOM::WidgetPushButton: {
+    //        if (ImGui::Button("Button", target.size)) {
+    //            DOM::drag_shown = false;
+    //        }
+    //        break;
+    //    }
+    //}
+
     ImGui::PopStyleVar();
     ImGui::End();
 }
 
 void DragHelper::update() {
+    // Handle state shift.
     if(_current_state != DOM::drag_shown) {
         _current_state = DOM::drag_shown;
         if(!_current_state) {
@@ -57,6 +80,7 @@ void DragHelper::update() {
             });
         }
     }
+    // Render helper.
     if(DOM::drag_shown) draw();
 
 }

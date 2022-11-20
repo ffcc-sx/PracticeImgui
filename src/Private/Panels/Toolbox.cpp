@@ -37,6 +37,8 @@ void Toolbox::draw() {
                 DOM::drag_shown = true;
                 // TODO: Type needed.
                 if(ImGui::BeginDragDropSource(ImGuiDragDropFlags_None)) {
+                    DOM::drag_action = DOM::DragActionType::ActionAppendFromToolbox;
+                    DOM::drag_target_id = 0;    // No id.
                     DOM::drag_info.type = DOM::WidgetPushButton;
                     DOM::drag_info.state = 2;   // Appending.
                     ImGui::SetDragDropPayload("drag_helper", &DOM::drag_info, sizeof(DOM::drag_info));
